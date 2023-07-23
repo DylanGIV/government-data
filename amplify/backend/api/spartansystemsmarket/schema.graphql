@@ -1,0 +1,246 @@
+type Rfq @searchable @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  rfqNumber: String
+  dateSent: AWSDateTime
+  custRefNum: String
+  companyName: String
+  contact: String
+  phone: String
+  email: AWSEmail
+  shippingTerms: String
+  shippingMethod: String
+  leadTime: Int
+  paymentTerms: String
+  dueDate: AWSDateTime
+  quantityRequested: [Int]
+  quantityQuoted: [Int]
+  uom: String
+  urgency: String
+  discount: Float
+  lineTotal: Float
+  subtotal: Float
+  salesTax: Float
+  total: Float
+  internalComments: String
+  emailComments: String
+  addressLine1: String
+  addressLine2: String
+  city: String
+  state: String
+  zip: String
+  country: String
+  Items: [Item] @manyToMany(relationName: "RfqItems")
+  receivingCompanyID: ID! @index(name: "byReceivingCompany")
+  sendingCompanyID: ID! @index(name: "bySendingCompany")
+  ReceivingCompany: Company @belongsTo(fields: ["receivingCompanyID"])
+  SendingCompany: Company @belongsTo(fields: ["sendingCompanyID"])
+  status: String
+}
+
+type UserDetails @model @auth(rules: [{ allow: owner }, { allow: public }]) {
+  userID: ID! @primaryKey
+  firstName: String
+  lastName: String
+  roles: [String]
+  contactEmail: AWSEmail
+  contactPhone: String
+  companyID: ID @index(name: "byCompany")
+  BillingAddresses: [BillingAddress]
+    @manyToMany(relationName: "UserDetailsBillingAddress")
+  ShippingAddresses: [ShippingAddress]
+    @manyToMany(relationName: "UserDetailsShippingAddress")
+  isCompanyOwner: Boolean
+  ItemViewHistories: [ItemViewHistory] @hasMany(fields: ["userID"])
+  Messages: [Message] @hasMany(fields: ["userID"])
+  MessageBoards: [MessageBoard] @hasMany(fields: ["userID"])
+}
+
+type Country @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  countryName: String
+  code: String
+  BillingAddresses: [BillingAddress]
+    @hasMany(indexName: "byCountry", fields: ["id"])
+  ShippingAddresses: [ShippingAddress]
+    @hasMany(indexName: "byCountry", fields: ["id"])
+}
+
+type ShippingAddress @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  unitNumber: String
+  streetNumber: String
+  addressLine1: String
+  addressLine2: String
+  city: String
+  regi: String
+  postalCode: String
+  isDefault: Boolean
+  countryID: ID! @index(name: "byCountry")
+  country: Country @belongsTo(fields: ["countryID"])
+  UserShippingAddresses: [UserDetails]
+    @manyToMany(relationName: "UserDetailsShippingAddress")
+  CompanyShippingAddresses: [Company]
+    @manyToMany(relationName: "CompanyShippingAddress")
+}
+
+type BillingAddress @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  unitNumber: String
+  streetNumber: String
+  addressLine1: String
+  addressLine2: String
+  city: String
+  region: String
+  postalCode: String
+  isDefault: Boolean
+  CompanyBillingAddresses: [Company]
+    @manyToMany(relationName: "CompanyBillingAddress")
+  countryID: ID! @index(name: "byCountry")
+  country: Country @belongsTo(fields: ["countryID"])
+  UserBillingAddresses: [UserDetails]
+    @manyToMany(relationName: "UserDetailsBillingAddress")
+}
+
+type Company @searchable @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  companyName: String
+  phone: String
+  contactEmail: AWSEmail
+  Items: [Item] @hasMany(indexName: "byCompany", fields: ["id"])
+  ItemMROS: [ItemMRO] @hasMany(indexName: "byCompany", fields: ["id"])
+  BillingAddresses: [BillingAddress]
+    @manyToMany(relationName: "CompanyBillingAddress")
+  CompanyMembers: [UserDetails] @hasMany(indexName: "byCompany", fields: ["id"])
+  CompanyOwner: UserDetails @hasOne
+  ShippingAddresses: [ShippingAddress]
+    @manyToMany(relationName: "CompanyShippingAddress")
+  countryID: ID @index(name: "byCountry")
+  profilePictureUrl: String
+  fax: String
+  cageCode: String
+  qualityCertifications: [String]
+  companyDescription: String
+  sentRfqs: [Rfq] @hasMany
+  receivedRfqs: [Rfq] @hasMany
+  country: Country @hasOne(fields: ["countryID"])
+  addressId: ID
+  address: ShippingAddress @hasOne(fields: ["addressId"])
+  MessageBoards: [MessageBoard] @hasMany
+  Messages: [Message] @hasMany
+  Notifications: [Notification] @hasMany
+}
+type Notification @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  message: String!
+  type: String!
+  companyID: ID!
+    @index(
+      name: "byCompany"
+      queryField: "byCompany"
+      sortKeyFields: ["createdAt"]
+    )
+  createdAt: String!
+  Company: Company @belongsTo(fields: ["companyID"])
+}
+
+type ItemMRO @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  nsn: String
+  partNumber: String
+  altPartNumber: String
+  description: String
+  quantity: Int
+  price: Float
+  certification: String
+  companyID: ID! @index(name: "byCompany")
+  imageUrls: [String]
+}
+
+type Item @searchable @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  nsn: String
+  partNumber: String
+  altPartNumber: String
+  description: String
+  quantity: Int
+  condition: String
+  control: String
+  price: Float
+  demilitarizationCode: String
+  scheduleB: String
+  eccn: String
+  isExportControlled: Boolean
+  usml: Boolean
+  companyID: ID! @index(name: "byCompany")
+  countryID: ID @index(name: "byCountry")
+  Country: Country @hasOne(fields: ["countryID"])
+  imageUrls: [String]
+  Rfqs: [Rfq] @manyToMany(relationName: "RfqItems")
+  Company: Company @belongsTo(fields: ["companyID"])
+  ItemViewHistories: [ItemViewHistory] @hasMany(fields: ["id"])
+  viewCount: Int @default(value: "0")
+  unitOfMeasure: String
+}
+
+type ItemViewHistory
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public }]) {
+  id: ID!
+  itemViewDate: AWSDateTime!
+  userID: ID!
+  User: UserDetails @belongsTo(fields: ["userID"])
+  itemID: ID!
+  Item: Item @belongsTo(fields: ["itemID"])
+}
+
+type MessageBoard
+  @searchable
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public }]) {
+  id: ID!
+  name: String!
+  description: String
+  userID: ID! @index(name: "byUser")
+  User: UserDetails @belongsTo(fields: ["userID"])
+  companyID: ID! @index(name: "byCompany")
+  Company: Company @belongsTo(fields: ["companyID"])
+  Messages: [Message] @hasMany
+}
+
+type Message
+  @searchable
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public }]) {
+  id: ID!
+  content: String!
+  timestamp: AWSDateTime!
+  userID: ID! @index(name: "byUser")
+  User: UserDetails @belongsTo(fields: ["userID"])
+  companyID: ID! @index(name: "byCompany")
+  Company: Company @belongsTo(fields: ["companyID"])
+  messageBoardID: ID!
+  MessageBoard: MessageBoard @belongsTo(fields: ["messageBoardID"])
+}
+
+type CompanyItemsImport @model @auth(rules: [{ allow: public }]) {
+  id: ID! @primaryKey
+  companyID: ID!
+  importName: String
+  importStatus: String
+  importProgress: Float
+  importFileKey: String
+}
+
+type CustomerRfqEmail
+  @model
+  @auth(rules: [{ allow: public, operations: [create] }]) {
+  id: ID!
+  email: AWSEmail!
+  dateSent: AWSDateTime!
+  htmlBody: String!
+}
+
+input CreateRfqWithItemsInput {
+  rfqId: ID!
+  items: [ID!]!
+}
