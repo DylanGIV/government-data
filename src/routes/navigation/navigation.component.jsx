@@ -1,7 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 import './navigation.styles.scss';
 import { UserContext } from '../../context/user.context.tsx';
@@ -12,8 +10,6 @@ import MobileNav from '../../components/mobileNav/mobileNav.component';
 const Navigation = () => {
   const { company, userDetails, mobile, docWidth, docHeight } =
     useContext(UserContext);
-
-  console.log(mobile);
 
   const { tokens } = useTheme();
 

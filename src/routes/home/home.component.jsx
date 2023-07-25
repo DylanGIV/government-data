@@ -8,6 +8,7 @@ import React, { useContext } from 'react';
 import { Container, Typography, Box, Button, Grid } from '@mui/material';
 import HomeCard from '../../components/homeCard/homeCard.component';
 import { UserContext } from '../../context/user.context.tsx';
+import SearchNSN from '../../components/searchNSN/searchNSN.component';
 const Home = () => {
   // Sample aerospace parts data
   const HomeCardInformation = [
@@ -79,13 +80,16 @@ const Home = () => {
             Find NSN details, procurement history, and more!
           </Typography>
         </div>
-        <Grid container spacing={HomeCardInformation.length - 1}>
+
+        <SearchNSN />
+
+        {/* <Grid container spacing={HomeCardInformation.length - 1}>
           {HomeCardInformation.map((card) => (
             <Grid item key={card.id} width='100%'>
               <HomeCard card={card} />
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
       </Flex>
     </div>
   );

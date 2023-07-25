@@ -9,7 +9,6 @@ export default function NavBar(props) {
   const { tokens } = useTheme();
 
   const { docWidth } = React.useContext(UserContext);
-  console.log(docWidth);
 
   return (
     <Flex
@@ -26,7 +25,6 @@ export default function NavBar(props) {
         direction='row'
         justifyContent='flex-start'
         alignItems='center'
-        shrink='0'
         flex='1'
         alignSelf='stretch'
         position='relative'
@@ -41,18 +39,22 @@ export default function NavBar(props) {
           borderRadius='5px'
           {...getOverrideProps(overrides, 'Star 1')}
         ></Image>
-
-        <Typography
-          fontFamily='Inter'
-          fontSize='28px'
-          fontWeight='600'
-          color='rgba(0,0,0,1)'
-          textTransform='capitalize'
-          textAlign='left'
-          whiteSpace='pre-wrap'
-          children='Spartan'
-          {...getOverrideProps(overrides, 'Logo29767075')}
-        ></Typography>
+        <Flex display='flex' direction='column' alignItems='flex-end'>
+          <Typography
+            fontFamily='Inter'
+            fontSize='24px'
+            fontWeight='600'
+            color='rgba(0,0,0,1)'
+            textAlign='left'
+            whiteSpace='pre-wrap'
+            children='Spartan'
+            lineHeight='24px'
+            {...getOverrideProps(overrides, 'Logo29767075')}
+          ></Typography>
+          <Typography variant='caption' lineHeight='10px'>
+            DATA
+          </Typography>
+        </Flex>
       </Flex>
       <Flex
         direction='row'
@@ -83,32 +85,8 @@ export default function NavBar(props) {
           textAlign='center'
           letterSpacing='0.09px'
           whiteSpace='pre-wrap'
-          children='Search'
-          {...getOverrideProps(overrides, 'Parts')}
-        ></Typography>
-        <Typography
-          fontFamily='Inter'
-          fontSize='19px'
-          fontWeight='400'
-          color='rgba(0,0,0,1)'
-          textAlign='center'
-          width={docWidth > 870 ? '210px' : '100%'}
-          letterSpacing='0.09px'
-          whiteSpace='pre-wrap'
-          children='Inventory Management'
-          lineHeight={docWidth > 870 ? 'unset' : '20px'}
-          {...getOverrideProps(overrides, 'Inventory')}
-        ></Typography>
-        <Typography
-          fontFamily='Inter'
-          fontSize='19px'
-          fontWeight='400'
-          color='rgba(0,0,0,1)'
-          textAlign='center'
-          letterSpacing='0.09px'
-          whiteSpace='pre-wrap'
-          children='RFQs'
-          {...getOverrideProps(overrides, 'RFQs')}
+          children='Search NSN'
+          {...getOverrideProps(overrides, 'Search')}
         ></Typography>
       </Flex>
       <Flex
