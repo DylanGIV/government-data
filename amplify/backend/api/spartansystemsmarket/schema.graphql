@@ -244,26 +244,3 @@ input CreateRfqWithItemsInput {
   rfqId: ID!
   items: [ID!]!
 }
-
-type ContractHistory @searchable @model @auth(rules: [{ allow: public }]) {
-  id: ID! @primaryKey
-  niin: String
-  securityClassification: String
-  fsc: String
-  itemName: String
-  clin: String
-  unit: String
-  cage: String
-  contractNumber: String
-  orderQuantity: Float
-  referencedPIID: String
-  netPrice: Float
-  poNumber: String
-  poItemNumber: String
-  partNumber: String
-  stdUPrice: Float
-  nsn: String
-  awardDate: String
-  piinSPIINMod: String
-  solicAmendmentNumber: String
-}
