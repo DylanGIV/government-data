@@ -17,6 +17,7 @@ import { studioTheme } from './theme/index';
 import awsconfig from './aws-exports';
 import { SnackbarProvider } from './context/snackBar.context';
 import { UserProvider } from './context/user.context';
+import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(awsconfig);
 AWS.config.region = awsconfig.aws_project_region;

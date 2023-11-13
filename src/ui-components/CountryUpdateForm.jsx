@@ -7,14 +7,13 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Country } from "../models";
-import { fetchByPath, validateField } from "./utils";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function CountryUpdateForm(props) {
   const {
     id: idProp,
-    country,
+    country: countryModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -40,14 +39,16 @@ export default function CountryUpdateForm(props) {
     setCode(cleanValues.code);
     setErrors({});
   };
-  const [countryRecord, setCountryRecord] = React.useState(country);
+  const [countryRecord, setCountryRecord] = React.useState(countryModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Country, idProp) : country;
+      const record = idProp
+        ? await DataStore.query(Country, idProp)
+        : countryModelProp;
       setCountryRecord(record);
     };
     queryData();
-  }, [idProp, country]);
+  }, [idProp, countryModelProp]);
   React.useEffect(resetStateValues, [countryRecord]);
   const validations = {
     countryName: [],
@@ -58,9 +59,10 @@ export default function CountryUpdateForm(props) {
     currentValue,
     getDisplayValue
   ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -105,8 +107,8 @@ export default function CountryUpdateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
             }
           });
           await DataStore.save(
@@ -187,7 +189,7 @@ export default function CountryUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || country)}
+          isDisabled={!(idProp || countryModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -199,7 +201,7 @@ export default function CountryUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || country) ||
+              !(idProp || countryModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

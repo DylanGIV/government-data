@@ -4,26 +4,39 @@ import { schema } from './schema';
 
 
 
-const { Rfq, Item, Country, BillingAddress, Company, ItemMRO, UserDetails, ShippingAddress, ItemViewHistory, Message, MessageBoard, Notification, CompanyItemsImport, CustomerRfqEmail, RfqItems, CompanyBillingAddress, UserDetailsBillingAddress, CompanyShippingAddress, UserDetailsShippingAddress } = initSchema(schema);
+const { Rfq, UserDetails, Country, ShippingAddress, BillingAddress, Company, Notification, ItemMRO, Item, ItemViewHistory, MessageBoard, Message, CompanyItemsImport, CustomerRfqEmail, NSNDetail, ContractHistory, RfqItems, UserDetailsBillingAddress, UserDetailsShippingAddress, CompanyShippingAddress, CompanyBillingAddress, PartInformation, AdditionalPartInformation, ManagementInformation, PhraseInformation, ReplacedReplacementNIINInformation, ObsoleteNIINInformation, TechnicalCharacteristicsInformation, MOERulesInformation, ReplacementAndObsoleteInformation, FreightInformation, PackagingInformation } = initSchema(schema);
 
 export {
   Rfq,
-  Item,
+  UserDetails,
   Country,
+  ShippingAddress,
   BillingAddress,
   Company,
-  ItemMRO,
-  UserDetails,
-  ShippingAddress,
-  ItemViewHistory,
-  Message,
-  MessageBoard,
   Notification,
+  ItemMRO,
+  Item,
+  ItemViewHistory,
+  MessageBoard,
+  Message,
   CompanyItemsImport,
   CustomerRfqEmail,
+  NSNDetail,
+  ContractHistory,
   RfqItems,
-  CompanyBillingAddress,
   UserDetailsBillingAddress,
+  UserDetailsShippingAddress,
   CompanyShippingAddress,
-  UserDetailsShippingAddress
+  CompanyBillingAddress,
+  PartInformation,
+  AdditionalPartInformation,
+  ManagementInformation,
+  PhraseInformation,
+  ReplacedReplacementNIINInformation,
+  ObsoleteNIINInformation,
+  TechnicalCharacteristicsInformation,
+  MOERulesInformation,
+  ReplacementAndObsoleteInformation,
+  FreightInformation,
+  PackagingInformation
 };

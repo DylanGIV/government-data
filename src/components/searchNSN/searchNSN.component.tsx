@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { Search as SearchIcon, Clear as ClearIcon } from '@mui/icons-material';
 import Autocomplete from '@mui/material/Autocomplete';
+import { GetNSNDetails } from '../../utils/lqlite';
 
 const SearchNSN = () => {
   const [nsn, setNsn] = useState('');
@@ -17,8 +18,9 @@ const SearchNSN = () => {
     setNsn('');
   };
 
-  const handleSearch = () => {
-    console.log(nsn);
+  const handleSearch = async () => {
+    const result = await GetNSNDetails(nsn);
+    console.log(result);
   };
 
   return (

@@ -244,3 +244,219 @@ input CreateRfqWithItemsInput {
   rfqId: ID!
   items: [ID!]!
 }
+
+type NSNDetail
+  @model
+  @searchable
+  @auth(rules: [{ allow: public, operations: [create] }]) {
+  nsn: ID! @primaryKey
+  niin: String
+  itemName: String
+  inc: String
+  fsc: String
+  assignmentDate: String
+  crit: String
+  iig: String
+  isc: String
+  dateStandardized: String
+  hmic: String
+  dodic: String
+  nsc: String
+  cancellationDate: String
+  pmic: String
+  fiig: String
+  esd: String
+  scheduleB: String
+  demil: String
+  demilint: String
+  tiic: String
+  originator: String
+  adpec: String
+  rpdmrc: String
+  PartInformation: [PartInformation]
+  AdditionalPartInformation: [AdditionalPartInformation]
+  ManagementInformation: [ManagementInformation]
+  PhraseInformation: [PhraseInformation]
+  TechnicalCharacteristicsInformation: [TechnicalCharacteristicsInformation]
+  MOERulesInformation: [MOERulesInformation]
+  ReplacementAndObsoleteInformation: ReplacementAndObsoleteInformation
+  FreightInformation: FreightInformation
+  PackagingInformation: PackagingInformation
+
+  ContractHistories: [ContractHistory]
+    @hasMany(indexName: "byNSNDetail", fields: ["nsn"])
+}
+
+type PartInformation {
+  partNumber: String
+  cage: String
+  company: String
+  status: String
+  rncc: String
+  rnvc: String
+  dac: String
+  rnaac: String
+  rnfc: String
+  rnsc: String
+  rnjc: String
+  sadc: String
+  hcc: String
+  msds: String
+}
+
+type AdditionalPartInformation {
+  partNumber: String
+  cage: String
+  company: String
+  source: String
+  rncc: String
+  rnvc: String
+  dac: String
+  rnaac: String
+  rnfc: String
+  rnsc: String
+  rnjc: String
+  sadc: String
+  hcc: String
+  msds: String
+}
+
+type ManagementInformation {
+  moec: String
+  sos: String
+  aac: String
+  rc: String
+  slc: String
+  ciic: String
+  upq: String
+  usc: String
+  unitPrice: String
+  ui: String
+  uicf: String
+  mcd: String
+  actionDate: String
+  ch: String
+}
+
+type PhraseInformation {
+  moec: String
+  pc: String
+  phrase: String
+  qpa: String
+  uom: String
+  oou: String
+  jtc: String
+}
+
+type ReplacedReplacementNIINInformation {
+  fsc: String
+  niin: String
+  isc: String
+  originator: String
+  nsc: String
+  stdDate: String
+  status: String
+}
+
+type ObsoleteNIINInformation {
+  fsc: String
+  niin: String
+  demil: String
+  nsc: String
+  cancelled: String
+}
+
+type TechnicalCharacteristicsInformation {
+  mrc: String
+  requirementStatement: String
+  replyStatement: String
+}
+
+type MOERulesInformation {
+  moeRule: String
+  formerMOER: String
+  effective: String
+  amc: String
+  amsc: String
+  imc: String
+  imca: String
+  collaborators: String
+  receivers: String
+}
+
+type ReplacementAndObsoleteInformation {
+  replacedReplacementNIINInformation: [ReplacedReplacementNIINInformation]
+  obsoleteNIINInformation: [ObsoleteNIINInformation]
+}
+
+type FreightInformation {
+  description: String
+  originatingActivity: String
+  hazardousMaterial: String
+  nationalMotorFreightClassificationNumber: String
+  lessThanOneTruckload: String
+  nmfcSubItem: String
+  uniformFreightClassificationNumber: String
+  railVarianceCode: String
+  lessThanOneCarload: String
+  waterCommodityCode: String
+  typeOfCargoCode: String
+  specialHandlingCode: String
+  airCommoditySpecialHandlingCode: String
+  airDimensionCode: String
+  integrityCode: String
+}
+
+type PackagingInformation {
+  source: String
+  status: String
+  priSecICC: String
+  containerNSN: String
+  categoryCode: String
+  lvlAPkgReq: String
+  unitPackSize: String
+  presMaterial: String
+  lvlBPkgReq: String
+  unitPackWeight: String
+  presMethod: String
+  lvlCPkgReq: String
+  unitPackCube: String
+  wrappingMat: String
+  optProcInd: String
+  unpkgItemDims: String
+  specMarking: String
+  suppInst: String
+  containerFSC: String
+  spiNumber: String
+  spiRevision: String
+  unpkgWeight: String
+  spiDate: String
+  pkgDesignActivity: String
+  interContainerQty: String
+  interContainerCode: String
+  cleanDryProcedure: String
+  unitContainer: String
+  itemTypeStorage: String
+  unitContainerLevel: String
+  cushDunMaterial: String
+  cushDunThickness: String
+}
+
+type ContractHistory @model @searchable @auth(rules: [{ allow: public }]) {
+  contractNumber: ID! @primaryKey
+  nsn: ID! @index(name: "byNSNDetail")
+  NSNDetail: NSNDetail @belongsTo(fields: ["nsn"])
+  niin: String
+  securityClassification: String
+  fsc: String
+  unit: String
+  cage: String
+  orderQuantity: Float
+  awardDate: String
+  netPrice: Float
+  poNum: String
+  poItemNo: String
+  itemName: String
+  partNumber: String
+  standardUnitPrice: Float
+}

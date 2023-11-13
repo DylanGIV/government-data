@@ -7,10 +7,7 @@
 /* eslint-disable */
 import * as React from "react";
 import { Item } from "../models";
-import {
-  getOverrideProps,
-  useDataStoreBinding,
-} from "@aws-amplify/ui-react/internal";
+import { getOverrideProps, useDataStoreBinding } from "./utils";
 import PartsListDetails from "./PartsListDetails";
 import { Collection } from "@aws-amplify/ui-react";
 export default function PartsListDetailsCollection(props) {
@@ -31,6 +28,7 @@ export default function PartsListDetailsCollection(props) {
           ...item,
           Country: await item.Country,
           Company: await item.Company,
+          ItemViewHistories: await item.ItemViewHistories.toArray(),
         }))
       );
       setItems(loaded);

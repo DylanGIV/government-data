@@ -7,14 +7,13 @@
 /* eslint-disable */
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { CustomerRfqEmail } from "../models";
-import { fetchByPath, validateField } from "./utils";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 export default function CustomerRfqEmailUpdateForm(props) {
   const {
     id: idProp,
-    customerRfqEmail,
+    customerRfqEmail: customerRfqEmailModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -41,17 +40,18 @@ export default function CustomerRfqEmailUpdateForm(props) {
     setHtmlBody(cleanValues.htmlBody);
     setErrors({});
   };
-  const [customerRfqEmailRecord, setCustomerRfqEmailRecord] =
-    React.useState(customerRfqEmail);
+  const [customerRfqEmailRecord, setCustomerRfqEmailRecord] = React.useState(
+    customerRfqEmailModelProp
+  );
   React.useEffect(() => {
     const queryData = async () => {
       const record = idProp
         ? await DataStore.query(CustomerRfqEmail, idProp)
-        : customerRfqEmail;
+        : customerRfqEmailModelProp;
       setCustomerRfqEmailRecord(record);
     };
     queryData();
-  }, [idProp, customerRfqEmail]);
+  }, [idProp, customerRfqEmailModelProp]);
   React.useEffect(resetStateValues, [customerRfqEmailRecord]);
   const validations = {
     email: [{ type: "Required" }, { type: "Email" }],
@@ -63,9 +63,10 @@ export default function CustomerRfqEmailUpdateForm(props) {
     currentValue,
     getDisplayValue
   ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -83,7 +84,7 @@ export default function CustomerRfqEmailUpdateForm(props) {
       minute: "2-digit",
       calendar: "iso8601",
       numberingSystem: "latn",
-      hour12: false,
+      hourCycle: "h23",
     });
     const parts = df.formatToParts(date).reduce((acc, part) => {
       acc[part.type] = part.value;
@@ -128,8 +129,8 @@ export default function CustomerRfqEmailUpdateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
             }
           });
           await DataStore.save(
@@ -240,7 +241,7 @@ export default function CustomerRfqEmailUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || customerRfqEmail)}
+          isDisabled={!(idProp || customerRfqEmailModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -252,7 +253,7 @@ export default function CustomerRfqEmailUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || customerRfqEmail) ||
+              !(idProp || customerRfqEmailModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

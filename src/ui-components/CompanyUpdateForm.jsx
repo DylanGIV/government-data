@@ -18,9 +18,8 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
 import { Company } from "../models";
-import { fetchByPath, validateField } from "./utils";
+import { fetchByPath, getOverrideProps, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -34,9 +33,17 @@ function ArrayField({
   defaultFieldValue,
   lengthLimit,
   getBadgeText,
+  runValidationTasks,
+  errorMessage,
 }) {
   const labelElement = <Text>{label}</Text>;
-  const { tokens } = useTheme();
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
   const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
   const [isEditing, setIsEditing] = React.useState();
   React.useEffect(() => {
@@ -50,6 +57,7 @@ function ArrayField({
     setSelectedBadgeIndex(undefined);
   };
   const addItem = async () => {
+    const { hasError } = runValidationTasks();
     if (
       currentFieldValue !== undefined &&
       currentFieldValue !== null &&
@@ -139,6 +147,11 @@ function ArrayField({
           >
             Add item
           </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
         </>
       ) : (
         <Flex justifyContent="flex-end">
@@ -154,13 +167,7 @@ function ArrayField({
               }}
             ></Button>
           )}
-          <Button
-            size="small"
-            variation="link"
-            color={tokens.colors.brand.primary[80]}
-            isDisabled={hasError}
-            onClick={addItem}
-          >
+          <Button size="small" variation="link" onClick={addItem}>
             {selectedBadgeIndex !== undefined ? "Save" : "Add"}
           </Button>
         </Flex>
@@ -172,7 +179,7 @@ function ArrayField({
 export default function CompanyUpdateForm(props) {
   const {
     id: idProp,
-    company,
+    company: companyModelProp,
     onSuccess,
     onError,
     onSubmit,
@@ -225,14 +232,16 @@ export default function CompanyUpdateForm(props) {
     setCompanyDescription(cleanValues.companyDescription);
     setErrors({});
   };
-  const [companyRecord, setCompanyRecord] = React.useState(company);
+  const [companyRecord, setCompanyRecord] = React.useState(companyModelProp);
   React.useEffect(() => {
     const queryData = async () => {
-      const record = idProp ? await DataStore.query(Company, idProp) : company;
+      const record = idProp
+        ? await DataStore.query(Company, idProp)
+        : companyModelProp;
       setCompanyRecord(record);
     };
     queryData();
-  }, [idProp, company]);
+  }, [idProp, companyModelProp]);
   React.useEffect(resetStateValues, [companyRecord]);
   const [
     currentQualityCertificationsValue,
@@ -254,9 +263,10 @@ export default function CompanyUpdateForm(props) {
     currentValue,
     getDisplayValue
   ) => {
-    const value = getDisplayValue
-      ? getDisplayValue(currentValue)
-      : currentValue;
+    const value =
+      currentValue && getDisplayValue
+        ? getDisplayValue(currentValue)
+        : currentValue;
     let validationResponse = validateField(value, validations[fieldName]);
     const customValidator = fetchByPath(onValidate, fieldName);
     if (customValidator) {
@@ -307,8 +317,8 @@ export default function CompanyUpdateForm(props) {
         }
         try {
           Object.entries(modelFields).forEach(([key, value]) => {
-            if (typeof value === "string" && value.trim() === "") {
-              modelFields[key] = undefined;
+            if (typeof value === "string" && value === "") {
+              modelFields[key] = null;
             }
           });
           await DataStore.save(
@@ -539,7 +549,14 @@ export default function CompanyUpdateForm(props) {
         currentFieldValue={currentQualityCertificationsValue}
         label={"Quality certifications"}
         items={qualityCertifications}
-        hasError={errors.qualityCertifications?.hasError}
+        hasError={errors?.qualityCertifications?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks(
+            "qualityCertifications",
+            currentQualityCertificationsValue
+          )
+        }
+        errorMessage={errors?.qualityCertifications?.errorMessage}
         setFieldValue={setCurrentQualityCertificationsValue}
         inputFieldRef={qualityCertificationsRef}
         defaultFieldValue={""}
@@ -613,7 +630,7 @@ export default function CompanyUpdateForm(props) {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || company)}
+          isDisabled={!(idProp || companyModelProp)}
           {...getOverrideProps(overrides, "ResetButton")}
         ></Button>
         <Flex
@@ -625,7 +642,7 @@ export default function CompanyUpdateForm(props) {
             type="submit"
             variation="primary"
             isDisabled={
-              !(idProp || company) ||
+              !(idProp || companyModelProp) ||
               Object.values(errors).some((e) => e?.hasError)
             }
             {...getOverrideProps(overrides, "SubmitButton")}

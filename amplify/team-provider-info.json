@@ -22,5 +22,29 @@
         "s3spartansystemsmarketplacestorage": {}
       }
     }
+  },
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-spartansystemsmarket-dev-233350-authRole",
+      "UnauthRoleArn": "arn:aws:iam::868723647444:role/amplify-spartansystemsmarket-dev-233350-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::868723647444:role/amplify-spartansystemsmarket-dev-233350-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-spartansystemsmarket-dev-233350-deployment",
+      "UnauthRoleName": "amplify-spartansystemsmarket-dev-233350-unauthRole",
+      "StackName": "amplify-spartansystemsmarket-dev-233350",
+      "StackId": "arn:aws:cloudformation:us-west-2:868723647444:stack/amplify-spartansystemsmarket-dev-233350/2eef8bf0-407b-11ee-9f10-02f25922de95",
+      "AmplifyAppId": "dn4tw0qvb97wj"
+    },
+    "categories": {
+      "auth": {
+        "spartansystemsmarketplace": {}
+      },
+      "storage": {
+        "s3spartansystemsmarketplacestorage": {}
+      },
+      "api": {
+        "spartansystemsmarket": {}
+      }
+    }
   }
 }

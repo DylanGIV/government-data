@@ -6,7 +6,7 @@
 
 /* eslint-disable */
 import * as React from "react";
-import { getOverrideProps } from "@aws-amplify/ui-react/internal";
+import { getOverrideProps } from "./utils";
 import { Flex, SelectField, TextField, View } from "@aws-amplify/ui-react";
 export default function CompanyCreateDetails(props) {
   const { contactPhone, logo, overrides, ...rest } = props;
