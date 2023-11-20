@@ -1,7 +1,7 @@
 // SnackbarContext.js
-import { createContext } from 'react';
-import React, { useState } from 'react';
-import AlertComponent from '../components/alertComponent/alertComponent.component';
+import { createContext } from "react";
+import React, { useState } from "react";
+import AlertComponent from "../components/alertComponent/alertComponent";
 
 export const SnackbarContext = createContext({
   showAlert: () => {},

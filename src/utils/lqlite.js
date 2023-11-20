@@ -21,8 +21,7 @@ export async function GetNSNDetails(nsn) {
 
   try {
     const response = await lambda.invoke(params).promise();
-    const result = JSON.parse(response.Payload);
-    return result;
+    return response;
   } catch (error) {
     console.error('Error invoking Lambda function:', error);
     throw error;

@@ -2666,11 +2666,17 @@ export const schema = {
                     "name": "PartInformation",
                     "isArray": true,
                     "type": {
-                        "nonModel": "PartInformation"
+                        "model": "PartInformation"
                     },
                     "isRequired": false,
                     "attributes": [],
-                    "isArrayNullable": true
+                    "isArrayNullable": true,
+                    "association": {
+                        "connectionType": "HAS_MANY",
+                        "associatedWith": [
+                            "NSNDetail"
+                        ]
+                    }
                 },
                 "AdditionalPartInformation": {
                     "name": "AdditionalPartInformation",
@@ -2802,6 +2808,24 @@ export const schema = {
                     }
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "name": "byNiin",
+                        "fields": [
+                            "niin"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byFsc",
+                        "fields": [
+                            "fsc"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -2809,6 +2833,200 @@ export const schema = {
                                 "allow": "public",
                                 "operations": [
                                     "create"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "PartInformation": {
+            "name": "PartInformation",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "nsn": {
+                    "name": "nsn",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "partNumber": {
+                    "name": "partNumber",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "cage": {
+                    "name": "cage",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "company": {
+                    "name": "company",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rncc": {
+                    "name": "rncc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rnvc": {
+                    "name": "rnvc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "dac": {
+                    "name": "dac",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rnaac": {
+                    "name": "rnaac",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rnfc": {
+                    "name": "rnfc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rnsc": {
+                    "name": "rnsc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "rnjc": {
+                    "name": "rnjc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "sadc": {
+                    "name": "sadc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "hcc": {
+                    "name": "hcc",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "msds": {
+                    "name": "msds",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "NSNDetail": {
+                    "name": "NSNDetail",
+                    "isArray": false,
+                    "type": {
+                        "model": "NSNDetail"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "nsn"
+                        ]
+                    }
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "PartInformations",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "searchable",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byNSN",
+                        "fields": [
+                            "nsn"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byPartNumber",
+                        "fields": [
+                            "partNumber"
+                        ]
+                    }
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
                                 ]
                             }
                         ]
@@ -3495,109 +3713,6 @@ export const schema = {
     },
     "enums": {},
     "nonModels": {
-        "PartInformation": {
-            "name": "PartInformation",
-            "fields": {
-                "partNumber": {
-                    "name": "partNumber",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "cage": {
-                    "name": "cage",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "company": {
-                    "name": "company",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "status": {
-                    "name": "status",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rncc": {
-                    "name": "rncc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rnvc": {
-                    "name": "rnvc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "dac": {
-                    "name": "dac",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rnaac": {
-                    "name": "rnaac",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rnfc": {
-                    "name": "rnfc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rnsc": {
-                    "name": "rnsc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "rnjc": {
-                    "name": "rnjc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "sadc": {
-                    "name": "sadc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "hcc": {
-                    "name": "hcc",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "msds": {
-                    "name": "msds",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                }
-            }
-        },
         "AdditionalPartInformation": {
             "name": "AdditionalPartInformation",
             "fields": {
@@ -4049,8 +4164,8 @@ export const schema = {
         "ReplacementAndObsoleteInformation": {
             "name": "ReplacementAndObsoleteInformation",
             "fields": {
-                "replacedReplacementNIINInformation": {
-                    "name": "replacedReplacementNIINInformation",
+                "ReplacedReplacementNIINInformation": {
+                    "name": "ReplacedReplacementNIINInformation",
                     "isArray": true,
                     "type": {
                         "nonModel": "ReplacedReplacementNIINInformation"
@@ -4059,8 +4174,8 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
-                "obsoleteNIINInformation": {
-                    "name": "obsoleteNIINInformation",
+                "ObsoleteNIINInformation": {
+                    "name": "ObsoleteNIINInformation",
                     "isArray": true,
                     "type": {
                         "nonModel": "ObsoleteNIINInformation"
@@ -4412,5 +4527,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "bef25706141a58564299f22d8e8d5d09"
+    "version": "8f8f81cfe44640f783ffe792fafa84a3"
 };

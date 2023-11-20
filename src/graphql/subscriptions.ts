@@ -1589,20 +1589,8 @@ export const onCreateNSNDetail = /* GraphQL */ `subscription OnCreateNSNDetail($
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -1767,20 +1755,8 @@ export const onUpdateNSNDetail = /* GraphQL */ `subscription OnUpdateNSNDetail($
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -1945,20 +1921,8 @@ export const onDeleteNSNDetail = /* GraphQL */ `subscription OnDeleteNSNDetail($
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -2095,6 +2059,198 @@ export const onDeleteNSNDetail = /* GraphQL */ `subscription OnDeleteNSNDetail($
 ` as GeneratedSubscription<
   APITypes.OnDeleteNSNDetailSubscriptionVariables,
   APITypes.OnDeleteNSNDetailSubscription
+>;
+export const onCreatePartInformation = /* GraphQL */ `subscription OnCreatePartInformation(
+  $filter: ModelSubscriptionPartInformationFilterInput
+) {
+  onCreatePartInformation(filter: $filter) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreatePartInformationSubscriptionVariables,
+  APITypes.OnCreatePartInformationSubscription
+>;
+export const onUpdatePartInformation = /* GraphQL */ `subscription OnUpdatePartInformation(
+  $filter: ModelSubscriptionPartInformationFilterInput
+) {
+  onUpdatePartInformation(filter: $filter) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdatePartInformationSubscriptionVariables,
+  APITypes.OnUpdatePartInformationSubscription
+>;
+export const onDeletePartInformation = /* GraphQL */ `subscription OnDeletePartInformation(
+  $filter: ModelSubscriptionPartInformationFilterInput
+) {
+  onDeletePartInformation(filter: $filter) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeletePartInformationSubscriptionVariables,
+  APITypes.OnDeletePartInformationSubscription
 >;
 export const onCreateContractHistory = /* GraphQL */ `subscription OnCreateContractHistory(
   $filter: ModelSubscriptionContractHistoryFilterInput

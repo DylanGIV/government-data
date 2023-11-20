@@ -14,6 +14,7 @@ export interface UserContextType {
   mobile: boolean;
   docWidth: number;
   docHeight: number;
+  scrollY: number;
   setUser: any;
   setCompany: any;
   setUserDetails: any;
@@ -25,6 +26,7 @@ export interface UserContextType {
   setMobile: any;
   setDocWidth: any;
   setDocHeight: any;
+  setScrollY: any;
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -39,6 +41,7 @@ export const UserContext = createContext<UserContextType>({
   mobile: false,
   docWidth: document.documentElement.clientWidth,
   docHeight: document.documentElement.clientHeight,
+  scrollY: window.scrollY,
   setUser: () => {},
   setCompany: () => {},
   setUserDetails: () => {},
@@ -50,6 +53,7 @@ export const UserContext = createContext<UserContextType>({
   setMobile: () => {},
   setDocWidth: () => {},
   setDocHeight: () => {},
+  setScrollY: () => {},
 });
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({
@@ -67,6 +71,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
   const [docHeight, setDocHeight] = useState(
     document.documentElement.scrollHeight
   );
+  const [scrollY, setScrollY] = useState(window.scrollY);
+
   // look for useTextFields in local storage. If does not exist, set default as true
   const [useTextFields, setUseTextFields] = useState(
     localStorage.getItem('useTextFields') === 'true' ? true : false
@@ -113,6 +119,18 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     };
   }, []);
 
+  useEffect(() => {
+    const updateScrollY = () => {
+      setScrollY(window.scrollY);
+    };
+
+    window.addEventListener('scroll', updateScrollY);
+
+    return () => {
+      window.removeEventListener('scroll', updateScrollY);
+    };
+  }, []);
+
   const value = {
     company,
     user,
@@ -136,6 +154,8 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({
     setDocWidth,
     docHeight,
     setDocHeight,
+    scrollY,
+    setScrollY,
   };
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;

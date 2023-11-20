@@ -1652,20 +1652,8 @@ export const createNSNDetail = /* GraphQL */ `mutation CreateNSNDetail(
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -1833,20 +1821,8 @@ export const updateNSNDetail = /* GraphQL */ `mutation UpdateNSNDetail(
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -2014,20 +1990,8 @@ export const deleteNSNDetail = /* GraphQL */ `mutation DeleteNSNDetail(
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -2164,6 +2128,201 @@ export const deleteNSNDetail = /* GraphQL */ `mutation DeleteNSNDetail(
 ` as GeneratedMutation<
   APITypes.DeleteNSNDetailMutationVariables,
   APITypes.DeleteNSNDetailMutation
+>;
+export const createPartInformation = /* GraphQL */ `mutation CreatePartInformation(
+  $input: CreatePartInformationInput!
+  $condition: ModelPartInformationConditionInput
+) {
+  createPartInformation(input: $input, condition: $condition) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreatePartInformationMutationVariables,
+  APITypes.CreatePartInformationMutation
+>;
+export const updatePartInformation = /* GraphQL */ `mutation UpdatePartInformation(
+  $input: UpdatePartInformationInput!
+  $condition: ModelPartInformationConditionInput
+) {
+  updatePartInformation(input: $input, condition: $condition) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdatePartInformationMutationVariables,
+  APITypes.UpdatePartInformationMutation
+>;
+export const deletePartInformation = /* GraphQL */ `mutation DeletePartInformation(
+  $input: DeletePartInformationInput!
+  $condition: ModelPartInformationConditionInput
+) {
+  deletePartInformation(input: $input, condition: $condition) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeletePartInformationMutationVariables,
+  APITypes.DeletePartInformationMutation
 >;
 export const createContractHistory = /* GraphQL */ `mutation CreateContractHistory(
   $input: CreateContractHistoryInput!

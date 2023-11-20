@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Box,
   TextField,
@@ -6,31 +6,34 @@ import {
   Grid,
   InputAdornment,
   FormControl,
-} from '@mui/material';
-import { Search as SearchIcon, Clear as ClearIcon } from '@mui/icons-material';
-import Autocomplete from '@mui/material/Autocomplete';
-import { GetNSNDetails } from '../../utils/lqlite';
+} from "@mui/material";
+import { Search as SearchIcon, Clear as ClearIcon } from "@mui/icons-material";
+import Autocomplete from "@mui/material/Autocomplete";
+import { GetNSNDetails } from "../../utils/lqlite";
+import { NSNDetail } from "../../API";
+import { useNavigate } from "react-router";
 
 const SearchNSN = () => {
-  const [nsn, setNsn] = useState('');
+  const [nsn, setNsn] = useState("");
+
+  const navigate = useNavigate();
 
   const handleClear = () => {
-    setNsn('');
+    setNsn("");
   };
 
   const handleSearch = async () => {
-    const result = await GetNSNDetails(nsn);
-    console.log(result);
+    navigate(`/search/${nsn}`);
   };
 
   return (
     <Box>
-      <Grid container spacing={1} justifyContent='center'>
-        <Grid item xs={12} md={8}>
+      <Grid container spacing={1} justifyContent="center">
+        <Grid item xs={12} md={4}>
           <FormControl
             onSubmit={handleSearch}
             fullWidth
-            sx={{ display: 'flex', flexDirection: 'row' }}
+            sx={{ display: "flex", flexDirection: "row" }}
           >
             <Autocomplete
               options={[]}
@@ -45,11 +48,11 @@ const SearchNSN = () => {
               renderInput={(params) => (
                 <TextField
                   {...params}
-                  label='Search NSN'
-                  placeholder='Enter NSN'
+                  label="Search NSN"
+                  placeholder="Enter NSN"
                   fullWidth
                   onKeyDown={(ev) => {
-                    if (ev.key === 'Enter') {
+                    if (ev.key === "Enter") {
                       ev.preventDefault();
                       handleSearch();
                     }
@@ -57,14 +60,14 @@ const SearchNSN = () => {
                   InputProps={{
                     ...params.InputProps,
                     sx: {
-                      borderRadius: '4px 0px 0px 4px',
+                      borderRadius: "4px 0px 0px 4px",
                     },
                     endAdornment: (
-                      <InputAdornment position='end'>
+                      <InputAdornment position="end">
                         {nsn && (
                           <IconButton
                             onClick={handleClear}
-                            style={{ marginRight: '-40px' }}
+                            style={{ marginRight: "-40px" }}
                           >
                             <ClearIcon />
                           </IconButton>
@@ -82,8 +85,8 @@ const SearchNSN = () => {
                 flex: 0.1,
                 border: 1,
                 borderLeft: 0,
-                borderRadius: '0px 4px 4px 0px',
-                borderColor: 'lightgrey',
+                borderRadius: "0px 4px 4px 0px",
+                borderColor: "lightgrey",
               }}
             >
               <SearchIcon />

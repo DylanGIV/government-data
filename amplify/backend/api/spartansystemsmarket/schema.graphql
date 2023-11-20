@@ -250,10 +250,10 @@ type NSNDetail
   @searchable
   @auth(rules: [{ allow: public, operations: [create] }]) {
   nsn: ID! @primaryKey
-  niin: String
+  niin: String @index(name: "byNiin")
   itemName: String
   inc: String
-  fsc: String
+  fsc: String @index(name: "byFsc")
   assignmentDate: String
   crit: String
   iig: String
@@ -273,7 +273,7 @@ type NSNDetail
   originator: String
   adpec: String
   rpdmrc: String
-  PartInformation: [PartInformation]
+  PartInformation: [PartInformation] @hasMany(fields: ["nsn"])
   AdditionalPartInformation: [AdditionalPartInformation]
   ManagementInformation: [ManagementInformation]
   PhraseInformation: [PhraseInformation]
@@ -287,8 +287,10 @@ type NSNDetail
     @hasMany(indexName: "byNSNDetail", fields: ["nsn"])
 }
 
-type PartInformation {
-  partNumber: String
+type PartInformation @model @searchable @auth(rules: [{ allow: public }]) {
+  id: ID!
+  nsn: ID! @index(name: "byNSN")
+  partNumber: String @index(name: "byPartNumber")
   cage: String
   company: String
   status: String
@@ -302,6 +304,7 @@ type PartInformation {
   sadc: String
   hcc: String
   msds: String
+  NSNDetail: NSNDetail @belongsTo(fields: ["nsn"])
 }
 
 type AdditionalPartInformation {
@@ -385,8 +388,8 @@ type MOERulesInformation {
 }
 
 type ReplacementAndObsoleteInformation {
-  replacedReplacementNIINInformation: [ReplacedReplacementNIINInformation]
-  obsoleteNIINInformation: [ObsoleteNIINInformation]
+  ReplacedReplacementNIINInformation: [ReplacedReplacementNIINInformation]
+  ObsoleteNIINInformation: [ObsoleteNIINInformation]
 }
 
 type FreightInformation {

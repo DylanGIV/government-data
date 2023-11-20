@@ -4,44 +4,6 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
-type EagerPartInformation = {
-  readonly partNumber?: string | null;
-  readonly cage?: string | null;
-  readonly company?: string | null;
-  readonly status?: string | null;
-  readonly rncc?: string | null;
-  readonly rnvc?: string | null;
-  readonly dac?: string | null;
-  readonly rnaac?: string | null;
-  readonly rnfc?: string | null;
-  readonly rnsc?: string | null;
-  readonly rnjc?: string | null;
-  readonly sadc?: string | null;
-  readonly hcc?: string | null;
-  readonly msds?: string | null;
-}
-
-type LazyPartInformation = {
-  readonly partNumber?: string | null;
-  readonly cage?: string | null;
-  readonly company?: string | null;
-  readonly status?: string | null;
-  readonly rncc?: string | null;
-  readonly rnvc?: string | null;
-  readonly dac?: string | null;
-  readonly rnaac?: string | null;
-  readonly rnfc?: string | null;
-  readonly rnsc?: string | null;
-  readonly rnjc?: string | null;
-  readonly sadc?: string | null;
-  readonly hcc?: string | null;
-  readonly msds?: string | null;
-}
-
-export declare type PartInformation = LazyLoading extends LazyLoadingDisabled ? EagerPartInformation : LazyPartInformation
-
-export declare const PartInformation: (new (init: ModelInit<PartInformation>) => PartInformation)
-
 type EagerAdditionalPartInformation = {
   readonly partNumber?: string | null;
   readonly cage?: string | null;
@@ -231,13 +193,13 @@ export declare type MOERulesInformation = LazyLoading extends LazyLoadingDisable
 export declare const MOERulesInformation: (new (init: ModelInit<MOERulesInformation>) => MOERulesInformation)
 
 type EagerReplacementAndObsoleteInformation = {
-  readonly replacedReplacementNIINInformation?: (ReplacedReplacementNIINInformation | null)[] | null;
-  readonly obsoleteNIINInformation?: (ObsoleteNIINInformation | null)[] | null;
+  readonly ReplacedReplacementNIINInformation?: (ReplacedReplacementNIINInformation | null)[] | null;
+  readonly ObsoleteNIINInformation?: (ObsoleteNIINInformation | null)[] | null;
 }
 
 type LazyReplacementAndObsoleteInformation = {
-  readonly replacedReplacementNIINInformation?: (ReplacedReplacementNIINInformation | null)[] | null;
-  readonly obsoleteNIINInformation?: (ObsoleteNIINInformation | null)[] | null;
+  readonly ReplacedReplacementNIINInformation?: (ReplacedReplacementNIINInformation | null)[] | null;
+  readonly ObsoleteNIINInformation?: (ObsoleteNIINInformation | null)[] | null;
 }
 
 export declare type ReplacementAndObsoleteInformation = LazyLoading extends LazyLoadingDisabled ? EagerReplacementAndObsoleteInformation : LazyReplacementAndObsoleteInformation
@@ -1130,7 +1092,7 @@ type LazyNSNDetail = {
   readonly originator?: string | null;
   readonly adpec?: string | null;
   readonly rpdmrc?: string | null;
-  readonly PartInformation?: (PartInformation | null)[] | null;
+  readonly PartInformation: AsyncCollection<PartInformation>;
   readonly AdditionalPartInformation?: (AdditionalPartInformation | null)[] | null;
   readonly ManagementInformation?: (ManagementInformation | null)[] | null;
   readonly PhraseInformation?: (PhraseInformation | null)[] | null;
@@ -1148,6 +1110,64 @@ export declare type NSNDetail = LazyLoading extends LazyLoadingDisabled ? EagerN
 
 export declare const NSNDetail: (new (init: ModelInit<NSNDetail>) => NSNDetail) & {
   copyOf(source: NSNDetail, mutator: (draft: MutableModel<NSNDetail>) => MutableModel<NSNDetail> | void): NSNDetail;
+}
+
+type EagerPartInformation = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PartInformation, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nsn: string;
+  readonly partNumber?: string | null;
+  readonly cage?: string | null;
+  readonly company?: string | null;
+  readonly status?: string | null;
+  readonly rncc?: string | null;
+  readonly rnvc?: string | null;
+  readonly dac?: string | null;
+  readonly rnaac?: string | null;
+  readonly rnfc?: string | null;
+  readonly rnsc?: string | null;
+  readonly rnjc?: string | null;
+  readonly sadc?: string | null;
+  readonly hcc?: string | null;
+  readonly msds?: string | null;
+  readonly NSNDetail?: NSNDetail | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyPartInformation = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<PartInformation, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly nsn: string;
+  readonly partNumber?: string | null;
+  readonly cage?: string | null;
+  readonly company?: string | null;
+  readonly status?: string | null;
+  readonly rncc?: string | null;
+  readonly rnvc?: string | null;
+  readonly dac?: string | null;
+  readonly rnaac?: string | null;
+  readonly rnfc?: string | null;
+  readonly rnsc?: string | null;
+  readonly rnjc?: string | null;
+  readonly sadc?: string | null;
+  readonly hcc?: string | null;
+  readonly msds?: string | null;
+  readonly NSNDetail: AsyncItem<NSNDetail | undefined>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type PartInformation = LazyLoading extends LazyLoadingDisabled ? EagerPartInformation : LazyPartInformation
+
+export declare const PartInformation: (new (init: ModelInit<PartInformation>) => PartInformation) & {
+  copyOf(source: PartInformation, mutator: (draft: MutableModel<PartInformation>) => MutableModel<PartInformation> | void): PartInformation;
 }
 
 type EagerContractHistory = {

@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
-import { Routes, Route, useNavigate } from 'react-router-dom';
-import { useAuthenticator } from '@aws-amplify/ui-react';
-import Navigation from './routes/navigation/navigation.component';
-import Home from './routes/home/home.component';
-import { UserContext } from './context/user.context';
+import { useContext, useEffect, useState } from "react";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useAuthenticator } from "@aws-amplify/ui-react";
+import Navigation from "./routes/navigation/navigation";
+import Home from "./routes/home/home";
+import { UserContext } from "./context/user.context";
+import NSNDetails from "./routes/nsnDetails/nsnDetails";
 
 function App() {
   const { user } = useAuthenticator();
@@ -43,17 +44,18 @@ function App() {
       }
     };
     updateDocWidth();
-    window.addEventListener('resize', updateDocWidth);
+    window.addEventListener("resize", updateDocWidth);
 
     return () => {
-      window.removeEventListener('resize', updateDocWidth);
+      window.removeEventListener("resize", updateDocWidth);
     };
   }, []);
 
   return (
     <Routes>
-      <Route path='/' element={<Navigation />}>
+      <Route path="/" element={<Navigation />}>
         <Route index element={<Home />} />
+        <Route path="search/:searchTerm" element={<NSNDetails />} />
       </Route>
     </Routes>
   );

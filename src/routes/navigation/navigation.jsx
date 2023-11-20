@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
 
 import './navigation.styles.scss';
-import { UserContext } from '../../context/user.context.tsx';
+import { UserContext } from '../../context/user.context';
 import { useTheme } from '@aws-amplify/ui-react';
-import NavBar from '../../components/navBar/navBar.component';
-import MobileNav from '../../components/mobileNav/mobileNav.component';
+import NavBar from '../../components/navBar/navBar';
+import MobileNav from '../../components/mobileNav/mobileNav';
 
 const Navigation = () => {
   const { company, userDetails, mobile, docWidth, docHeight } =
@@ -71,50 +71,37 @@ const Navigation = () => {
   return (
     <div
       style={{
-        display: 'flex',
-        flexDirection: 'column',
         width: '100%',
         height: '100%',
-        minHeight: '100%',
       }}
     >
-      {mobile ? (
-        <MobileNav />
-      ) : (
-        <>
-          <div
-            style={{
-              position: 'relative',
-              paddingBottom: '50px',
-            }}
-          ></div>
-          <div
-            style={{
-              width: '100%',
-              height: '100px',
-              display: 'flex',
-              position: 'fixed',
-              zIndex: 11,
-            }}
-          >
-            <NavBar width={'100%'} overrides={navOverrides} position='fixed' />
-          </div>
-        </>
-      )}
+      <div
+        style={{
+          width: '100%',
+          height: '75px',
+          display: 'flex',
+          position: 'sticky',
+          top: 0,
+          zIndex: 11,
+        }}
+      >
+        {mobile ? (
+          <MobileNav />
+        ) : (
+          <NavBar width={'100%'} overrides={navOverrides} />
+        )}
+      </div>
       <div
         style={{
           display: 'flex',
+          position: 'relative',
           flexDirection: 'row',
-          paddingTop: mobile ? 30 : 10,
-          paddingLeft: mobile ? 0 : 10,
           width: '100%',
           minHeight: '100vh',
           justifyContent: 'center',
           minWidth: mobile ? '100%' : '1500',
+          paddingTop: '15px',
           zIndex: 10,
-          background: mobile
-            ? ''
-            : `radial-gradient(circle at center, ${tokens.colors.background.quaternary} 0%, ${tokens.colors.background.quaternary} 30%,${tokens.colors.background.quaternary} 40%,${tokens.colors.background.tertiary} 100%)`,
         }}
       >
         <Outlet />

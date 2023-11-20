@@ -294,6 +294,71 @@ export const searchNSNDetails = /* GraphQL */ `query SearchNSNDetails(
   APITypes.SearchNSNDetailsQueryVariables,
   APITypes.SearchNSNDetailsQuery
 >;
+export const searchPartInformations = /* GraphQL */ `query SearchPartInformations(
+  $filter: SearchablePartInformationFilterInput
+  $sort: [SearchablePartInformationSortInput]
+  $limit: Int
+  $nextToken: String
+  $from: Int
+  $aggregates: [SearchablePartInformationAggregationInput]
+) {
+  searchPartInformations(
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    nextToken: $nextToken
+    from: $from
+    aggregates: $aggregates
+  ) {
+    items {
+      id
+      nsn
+      partNumber
+      cage
+      company
+      status
+      rncc
+      rnvc
+      dac
+      rnaac
+      rnfc
+      rnsc
+      rnjc
+      sadc
+      hcc
+      msds
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    total
+    aggregateItems {
+      name
+      result {
+        ... on SearchableAggregateScalarResult {
+          value
+        }
+        ... on SearchableAggregateBucketResult {
+          buckets {
+            key
+            doc_count
+            __typename
+          }
+        }
+      }
+      __typename
+    }
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.SearchPartInformationsQueryVariables,
+  APITypes.SearchPartInformationsQuery
+>;
 export const searchContractHistories = /* GraphQL */ `query SearchContractHistories(
   $filter: SearchableContractHistoryFilterInput
   $sort: [SearchableContractHistorySortInput]
@@ -1627,20 +1692,8 @@ export const getNSNDetail = /* GraphQL */ `query GetNSNDetail($nsn: ID!) {
     adpec
     rpdmrc
     PartInformation {
-      partNumber
-      cage
-      company
-      status
-      rncc
-      rnvc
-      dac
-      rnaac
-      rnfc
-      rnsc
-      rnjc
-      sadc
-      hcc
-      msds
+      nextToken
+      startedAt
       __typename
     }
     AdditionalPartInformation {
@@ -1885,6 +1938,152 @@ export const syncNSNDetails = /* GraphQL */ `query SyncNSNDetails(
 ` as GeneratedQuery<
   APITypes.SyncNSNDetailsQueryVariables,
   APITypes.SyncNSNDetailsQuery
+>;
+export const getPartInformation = /* GraphQL */ `query GetPartInformation($id: ID!) {
+  getPartInformation(id: $id) {
+    id
+    nsn
+    partNumber
+    cage
+    company
+    status
+    rncc
+    rnvc
+    dac
+    rnaac
+    rnfc
+    rnsc
+    rnjc
+    sadc
+    hcc
+    msds
+    NSNDetail {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetPartInformationQueryVariables,
+  APITypes.GetPartInformationQuery
+>;
+export const listPartInformations = /* GraphQL */ `query ListPartInformations(
+  $filter: ModelPartInformationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPartInformations(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      nsn
+      partNumber
+      cage
+      company
+      status
+      rncc
+      rnvc
+      dac
+      rnaac
+      rnfc
+      rnsc
+      rnjc
+      sadc
+      hcc
+      msds
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListPartInformationsQueryVariables,
+  APITypes.ListPartInformationsQuery
+>;
+export const syncPartInformations = /* GraphQL */ `query SyncPartInformations(
+  $filter: ModelPartInformationFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncPartInformations(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      nsn
+      partNumber
+      cage
+      company
+      status
+      rncc
+      rnvc
+      dac
+      rnaac
+      rnfc
+      rnsc
+      rnjc
+      sadc
+      hcc
+      msds
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.SyncPartInformationsQueryVariables,
+  APITypes.SyncPartInformationsQuery
 >;
 export const getContractHistory = /* GraphQL */ `query GetContractHistory($contractNumber: ID!) {
   getContractHistory(contractNumber: $contractNumber) {
@@ -2848,6 +3047,210 @@ export const itemsByCountryID = /* GraphQL */ `query ItemsByCountryID(
 ` as GeneratedQuery<
   APITypes.ItemsByCountryIDQueryVariables,
   APITypes.ItemsByCountryIDQuery
+>;
+export const nSNDetailsByNiin = /* GraphQL */ `query NSNDetailsByNiin(
+  $niin: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelNSNDetailFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  nSNDetailsByNiin(
+    niin: $niin
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.NSNDetailsByNiinQueryVariables,
+  APITypes.NSNDetailsByNiinQuery
+>;
+export const nSNDetailsByFsc = /* GraphQL */ `query NSNDetailsByFsc(
+  $fsc: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelNSNDetailFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  nSNDetailsByFsc(
+    fsc: $fsc
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      nsn
+      niin
+      itemName
+      inc
+      fsc
+      assignmentDate
+      crit
+      iig
+      isc
+      dateStandardized
+      hmic
+      dodic
+      nsc
+      cancellationDate
+      pmic
+      fiig
+      esd
+      scheduleB
+      demil
+      demilint
+      tiic
+      originator
+      adpec
+      rpdmrc
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.NSNDetailsByFscQueryVariables,
+  APITypes.NSNDetailsByFscQuery
+>;
+export const partInformationsByNsn = /* GraphQL */ `query PartInformationsByNsn(
+  $nsn: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPartInformationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  partInformationsByNsn(
+    nsn: $nsn
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      nsn
+      partNumber
+      cage
+      company
+      status
+      rncc
+      rnvc
+      dac
+      rnaac
+      rnfc
+      rnsc
+      rnjc
+      sadc
+      hcc
+      msds
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PartInformationsByNsnQueryVariables,
+  APITypes.PartInformationsByNsnQuery
+>;
+export const partInformationsByPartNumber = /* GraphQL */ `query PartInformationsByPartNumber(
+  $partNumber: String!
+  $sortDirection: ModelSortDirection
+  $filter: ModelPartInformationFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  partInformationsByPartNumber(
+    partNumber: $partNumber
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      nsn
+      partNumber
+      cage
+      company
+      status
+      rncc
+      rnvc
+      dac
+      rnaac
+      rnfc
+      rnsc
+      rnjc
+      sadc
+      hcc
+      msds
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.PartInformationsByPartNumberQueryVariables,
+  APITypes.PartInformationsByPartNumberQuery
 >;
 export const contractHistoriesByNsn = /* GraphQL */ `query ContractHistoriesByNsn(
   $nsn: ID!
