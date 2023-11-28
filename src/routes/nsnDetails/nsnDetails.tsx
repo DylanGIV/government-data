@@ -26,6 +26,9 @@ import { SearchField, useTheme } from '@aws-amplify/ui-react';
 import TechnicalCharacteristicsInformationTable from './otherNSNDetails/tables/technicalCharacteristicsInformationTable';
 import ObsoleteNIINInformationTable from './otherNSNDetails/tables/obsoleteNIINInformationTable';
 import ReplacedReplacementNIINInformationTable from './otherNSNDetails/tables/replacedReplacementAndObsoleteInformationTable';
+import FreightInformationData from './otherNSNDetails/data/freightInformationData';
+import PackagingInformationData from './otherNSNDetails/data/packagingInformationData';
+import NSNDetailData from './otherNSNDetails/data/nsnDetailData';
 
 const NSNDetails = () => {
   const { searchTerm } = useParams();
@@ -165,6 +168,32 @@ const NSNDetails = () => {
         }}
       >
         {nsnDetail.nsn}
+        {nsnDetail && <NSNDetailData nsnDetail={nsnDetail} />}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: docWidth >= 1210 ? 'row' : 'column',
+            width: '100%',
+            alignItems: docWidth >= 1210 ? 'flex-start' : 'center',
+            justifyContent: docWidth >= 1210 ? 'center' : 'flex-start',
+            gap: '10px',
+          }}
+        >
+          <div>
+            {nsnDetail.FreightInformation && (
+              <FreightInformationData
+                freightInformation={nsnDetail.FreightInformation}
+              />
+            )}
+          </div>
+          <div>
+            {nsnDetail.PackagingInformation && (
+              <PackagingInformationData
+                packagingInformation={nsnDetail.PackagingInformation}
+              />
+            )}
+          </div>
+        </div>
         <div>
           <Button
             onClick={() => {

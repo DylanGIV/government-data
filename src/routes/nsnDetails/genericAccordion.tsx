@@ -7,8 +7,8 @@ interface GenericAccordionProps {
   expanded: boolean;
   onChange: () => void;
   children: React.ReactNode;
-  searchChildren: React.ReactNode;
-  itemLength: number;
+  searchChildren?: React.ReactNode;
+  itemLength?: number;
   maxWidth?: string;
   width?: string;
 }
